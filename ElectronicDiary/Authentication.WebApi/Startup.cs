@@ -1,5 +1,7 @@
 using Authentication.WebApi.Context;
+using Authentication.WebApi.Jwt;
 using Authentication.WebApi.User;
+using Authentication.WebApi.User.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +42,9 @@ namespace Authentication.WebApi
             identityBuilder.AddEntityFrameworkStores<AuthenticationContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
 
             services.AddControllers();
 
