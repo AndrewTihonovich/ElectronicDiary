@@ -10,10 +10,12 @@ namespace ElectronicDiary.WebApi.Middleware
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ExceptionMiddleware(RequestDelegate next)
+        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
         public async Task InvokeAsync(HttpContext httpContext)
         {
@@ -23,6 +25,7 @@ namespace ElectronicDiary.WebApi.Middleware
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Error: {ex.Message}");
                 await HandleExceptionAsync(httpContext, ex);
             }
         }
@@ -35,7 +38,6 @@ namespace ElectronicDiary.WebApi.Middleware
                 StatusCode = statusCode,
                 ErrorMessage = exception.Message
             });
-            context.Response.ContentType = "application/json";
             context.Response.StatusCode = statusCode;
             await context.Response.WriteAsync(result);
         }
