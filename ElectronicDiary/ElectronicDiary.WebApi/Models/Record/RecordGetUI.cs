@@ -2,6 +2,7 @@
 using ElectronicDiary.WebApi.Models.Record.Dto.Response;
 using ElectronicDiary.WebApi.Models.Record.Interfaces;
 using ElectronicDiary.WebApi.Models.Record.Mapper;
+using System;
 using System.Threading.Tasks;
 
 namespace ElectronicDiary.WebApi.Models.Record
@@ -17,6 +18,10 @@ namespace ElectronicDiary.WebApi.Models.Record
 
         public async Task<RecordDtoGetOneUI> GetOne(int Id)
         {
+            if (Id<=0 || Id>int.MaxValue)
+            {
+                throw new Exception($"Id = {Id} does not exist");
+            }
             var getRecord = RecordMapperUI.MapGetOne(Id);
             var record = _recordGetter.GetById(getRecord);
 
