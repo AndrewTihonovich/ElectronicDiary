@@ -1,6 +1,7 @@
 ﻿using ElectronicDiary.BLL.Models;
 using ElectronicDiary.BLL.Records.Creater;
 using ElectronicDiary.DAL;
+using System;
 using System.Threading.Tasks;
 
 namespace ElectronicDiary.BLL.Records.Deleter
@@ -19,6 +20,13 @@ namespace ElectronicDiary.BLL.Records.Deleter
         public async Task<RecordDto> Delete (RecordDtoRequest record)
         {
             var recordDbModel = RecordMapper.MapUpdate(record);
+            recordDbModel = await _db.Context.Records.FindAsync(recordDbModel.Id);
+
+            if (recordDbModel == null)
+            {
+                throw new Exception($"Record whith Id {record.Id} not found");
+            }
+
             var entry =  _db.Context.Records.Remove(recordDbModel);
 
             await _db.Context.SaveChangesAsync();

@@ -1,5 +1,6 @@
 ﻿using ElectronicDiary.BLL.Models;
 using ElectronicDiary.DAL;
+using System;
 using System.Threading.Tasks;
 
 namespace ElectronicDiary.BLL.Records.Getter
@@ -18,6 +19,10 @@ namespace ElectronicDiary.BLL.Records.Getter
             var recordDbModel = RecordMapper.MapGetById(record);
             var entry = await _db.Context.Records.FindAsync(recordDbModel.Id);
 
+            if (entry==null)
+            {
+                throw new Exception($"Record whith Id {recordDbModel.Id} not found");
+            }
             return RecordMapper.Map(entry);
         }
     }
