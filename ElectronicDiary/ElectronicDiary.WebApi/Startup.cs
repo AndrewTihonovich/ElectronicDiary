@@ -5,6 +5,7 @@ using ElectronicDiary.BLL.Records.Getter;
 using ElectronicDiary.BLL.Records.Updater;
 using ElectronicDiary.DAL;
 using ElectronicDiary.DAL.Logging;
+using ElectronicDiary.WebApi.Middleware;
 using ElectronicDiary.WebApi.Models.Record;
 using ElectronicDiary.WebApi.Models.Record.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -21,6 +22,7 @@ namespace ElectronicDiary.WebApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -48,10 +50,13 @@ namespace ElectronicDiary.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseSwagger();
             app.UseSwaggerUI();
