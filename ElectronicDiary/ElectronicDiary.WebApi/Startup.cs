@@ -8,12 +8,15 @@ using ElectronicDiary.DAL.Logging;
 using ElectronicDiary.WebApi.Middleware;
 using ElectronicDiary.WebApi.Models.Record;
 using ElectronicDiary.WebApi.Models.Record.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ElectronicDiary.WebApi
 {
@@ -22,7 +25,6 @@ namespace ElectronicDiary.WebApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
         }
 
         public IConfiguration Configuration { get; }
@@ -45,6 +47,19 @@ namespace ElectronicDiary.WebApi
             services.AddScoped<IRecordGetUI, RecordGetUI>();
             services.AddScoped<IRecordDeleteUI, RecordDeleteUI>();
             services.AddScoped<IRecordUpdateUI, RecordUpdateUI>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("a900fae1-70ed-4698-9953-3a247c104366")),
+                    ValidateIssuerSigningKey = true,
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +79,7 @@ namespace ElectronicDiary.WebApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

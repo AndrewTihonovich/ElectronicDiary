@@ -12,6 +12,5 @@ namespace ElectronicDiary.DAL.Models
         public string Phone { get; set; }
         public int UserRoleId { get; set; }
         public UserRole UserRole { get; set; }
-        public ICollection<Record> Records { get; set; }
     }
 }

@@ -36,8 +36,8 @@ namespace ElectronicDiary.DAL.Migrations
                         .HasColumnType("nvarchar(64)")
                         .HasMaxLength(64);
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("WasCreated")
                         .HasColumnType("datetime2");
@@ -46,8 +46,6 @@ namespace ElectronicDiary.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Record");
                 });
@@ -125,15 +123,6 @@ namespace ElectronicDiary.DAL.Migrations
                             Id = 1,
                             Role = "admin"
                         });
-                });
-
-            modelBuilder.Entity("ElectronicDiary.DAL.Models.Record", b =>
-                {
-                    b.HasOne("ElectronicDiary.DAL.Models.User", "User")
-                        .WithMany("Records")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ElectronicDiary.DAL.Models.User", b =>

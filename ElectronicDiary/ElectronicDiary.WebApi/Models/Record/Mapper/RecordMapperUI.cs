@@ -12,6 +12,7 @@ namespace ElectronicDiary.WebApi.Models.Record.Mapper
             {
                 Theme = create.Theme,
                 Text = create.Text,
+                UserId = create.UserId
             };
         }
 
@@ -37,7 +38,8 @@ namespace ElectronicDiary.WebApi.Models.Record.Mapper
             {
                 Theme = update.Theme,
                 Text = update.Text,
-                Id=update.Id
+                Id=update.Id,
+                UserId=update.UserId
             };
         }
 

@@ -11,7 +11,7 @@ namespace ElectronicDiary.BLL.Records
             {
                 Theme = createRecord.Theme,
                 Text = createRecord.Text,
-                UserId = 1       
+                UserId = createRecord.UserId     
             };
         }
 
@@ -30,7 +30,7 @@ namespace ElectronicDiary.BLL.Records
                 Theme = updateRecord.Theme,
                 Text = updateRecord.Text,
                 Id=updateRecord.Id,
-                UserId = 1       
+                UserId=updateRecord.UserId
             };
         }
 

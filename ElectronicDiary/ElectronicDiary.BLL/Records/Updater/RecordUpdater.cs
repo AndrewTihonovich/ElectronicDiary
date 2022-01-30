@@ -19,13 +19,22 @@ namespace ElectronicDiary.BLL.Records.Updater
         public async Task<RecordDto> Update (RecordDtoRequest record)
         {
             await _validator.Validate(record);
-            var recordDbModel = RecordMapper.MapUpdate(record);
-            recordDbModel = await _db.Context.Records.FindAsync(recordDbModel.Id);
+            //var recordDbModel = RecordMapper.MapUpdate(record);
+            var recordDbModel = await _db.Context.Records.FindAsync(record.Id);
 
             if (recordDbModel == null)
             {
                 throw new Exception($"Record whith Id {record.Id} not found");
             }
+
+            if (recordDbModel.UserId == record.UserId)
+            {
+                recordDbModel.Text = record.Text;
+                recordDbModel.Theme = record.Theme;
+            }
+            else 
+                { throw new Exception($"Can not update record. The record is owned by another user"); }
+            
 
             var entry = _db.Context.Records.Update(recordDbModel);
 

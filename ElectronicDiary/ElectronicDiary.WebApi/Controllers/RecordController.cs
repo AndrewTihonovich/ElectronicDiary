@@ -1,6 +1,7 @@
 ﻿using ElectronicDiary.WebApi.Models.Record.Dto.Request;
 using ElectronicDiary.WebApi.Models.Record.Dto.Response;
 using ElectronicDiary.WebApi.Models.Record.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ElectronicDiary.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RecordController : ControllerBase
@@ -18,6 +20,8 @@ namespace ElectronicDiary.WebApi.Controllers
         private readonly IRecordGetUI _recordGetter;
         private readonly IRecordUpdateUI _recordUpdater;
         private readonly ILogger<RecordController> _logger;
+
+        private string CurrentUserId => HttpContext.User.FindFirst(c => c.Type == "Email").Value;
 
         public RecordController(
             IRecordCreateUI recordCreater,
@@ -44,6 +48,7 @@ namespace ElectronicDiary.WebApi.Controllers
         public async Task<RecordDtoUI> CreateRecord([FromBody] RecordCreateDtoUI recordCreate)
         {
             _logger.LogInformation("Start create record");
+            recordCreate.UserId = CurrentUserId;
             return await _recordCreater.Create(recordCreate);
         }
 
@@ -51,6 +56,7 @@ namespace ElectronicDiary.WebApi.Controllers
         public async Task<RecordDtoUI> Put([FromBody] RecordUpdateDtoUI recordUpdate)
         {
             _logger.LogInformation("Start update record");
+            recordUpdate.UserId = CurrentUserId;
             return await _recordUpdater.Update(recordUpdate);
         }
 

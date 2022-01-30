@@ -16,8 +16,6 @@ namespace ElectronicDiary.DAL.TypeConfiguration
             builder.Property(p => p.Email).HasMaxLength(64).IsRequired();
             builder.Property(p => p.Phone).HasMaxLength(13);
             
-            builder.HasMany(prop => prop.Records);
-
             builder.HasOne(prop => prop.UserRole);
 
             builder.HasData(new User

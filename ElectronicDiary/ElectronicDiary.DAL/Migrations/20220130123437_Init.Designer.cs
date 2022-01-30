@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectronicDiary.DAL.Migrations
 {
     [DbContext(typeof(ElectronicDiaryDbContext))]
-    [Migration("20211209193051_Add TimeLabel to Record3")]
-    partial class AddTimeLabeltoRecord3
+    [Migration("20220130123437_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,13 +38,10 @@ namespace ElectronicDiary.DAL.Migrations
                         .HasColumnType("nvarchar(64)")
                         .HasMaxLength(64);
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("WasCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("WasDeleted")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("WasModifyed")
@@ -52,23 +49,7 @@ namespace ElectronicDiary.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Record");
-                });
-
-            modelBuilder.Entity("ElectronicDiary.DAL.Models.TimeLabel", b =>
-                {
-                    b.Property<DateTime?>("WasCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("WasDeleted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("WasModifyed")
-                        .HasColumnType("datetime2");
-
-                    b.ToTable("TimeLabel");
                 });
 
             modelBuilder.Entity("ElectronicDiary.DAL.Models.User", b =>
@@ -102,7 +83,7 @@ namespace ElectronicDiary.DAL.Migrations
                         .HasColumnType("nvarchar(13)")
                         .HasMaxLength(13);
 
-                    b.Property<int?>("UserRoleId")
+                    b.Property<int>("UserRoleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -110,6 +91,18 @@ namespace ElectronicDiary.DAL.Migrations
                     b.HasIndex("UserRoleId");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "admin@admin.com",
+                            FirstName = "admin",
+                            LastName = "admin",
+                            Login = "admin",
+                            Phone = "+398854526584",
+                            UserRoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("ElectronicDiary.DAL.Models.UserRole", b =>
@@ -125,22 +118,22 @@ namespace ElectronicDiary.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserRole");
-                });
 
-            modelBuilder.Entity("ElectronicDiary.DAL.Models.Record", b =>
-                {
-                    b.HasOne("ElectronicDiary.DAL.Models.User", "User")
-                        .WithMany("Records")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Role = "admin"
+                        });
                 });
 
             modelBuilder.Entity("ElectronicDiary.DAL.Models.User", b =>
                 {
                     b.HasOne("ElectronicDiary.DAL.Models.UserRole", "UserRole")
                         .WithMany()
-                        .HasForeignKey("UserRoleId");
+                        .HasForeignKey("UserRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
