@@ -19,7 +19,7 @@ namespace ElectronicDiary.BLL.Records.Updater
         public async Task<RecordDto> Update (RecordDtoRequest record)
         {
             await _validator.Validate(record);
-            //var recordDbModel = RecordMapper.MapUpdate(record);
+
             var recordDbModel = await _db.Context.Records.FindAsync(record.Id);
 
             if (recordDbModel == null)

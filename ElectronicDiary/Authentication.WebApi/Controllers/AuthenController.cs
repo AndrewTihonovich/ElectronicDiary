@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Authentication.WebApi.Controllers
@@ -28,7 +26,7 @@ namespace Authentication.WebApi.Controllers
         [AllowAnonymous]
         [Route("api/login")]
         [HttpPost]
-        public async Task<AutUser> LoginAsync([FromBody] UserLogin request) //Task<AutUser>
+        public async Task<AutUser> LoginAsync([FromBody] UserLogin request) 
         {
             string token = null;
 
@@ -47,8 +45,6 @@ namespace Authentication.WebApi.Controllers
             }
 
             throw new Exception("Login Error");
-
-            //RedirectToRoute("api/record");
         }
 
         [AllowAnonymous]

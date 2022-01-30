@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-
+﻿
 namespace ElectronicDiary.DAL.Models
 {
     public class User
