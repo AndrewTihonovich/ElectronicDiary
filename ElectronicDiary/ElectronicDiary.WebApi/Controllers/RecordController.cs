@@ -21,7 +21,7 @@ namespace ElectronicDiary.WebApi.Controllers
         private readonly IRecordUpdateUI _recordUpdater;
         private readonly ILogger<RecordController> _logger;
 
-        private string CurrentUserId => HttpContext.User.FindFirst(c => c.Type == "Email").Value;
+        private string CurrentUserId => HttpContext.User.FindFirst(c => c.Type == "Email")?.Value;
 
         public RecordController(
             IRecordCreateUI recordCreater,

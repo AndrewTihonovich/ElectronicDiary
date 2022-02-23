@@ -39,7 +39,7 @@ namespace Authentication.WebApi.Controllers
                     token = _jwt.CreateToken(user);
                 }
 
-                var autUser = new AutUser { DisplayName = user.Login, Token = token };
+                var autUser = new AutUser { DisplayName = user.Email, Token = token };
 
                 return autUser;
             }
@@ -55,7 +55,7 @@ namespace Authentication.WebApi.Controllers
             var registrationUser = await _repository.Create(request);
 
             var token = _jwt.CreateToken(registrationUser);
-            var autUser = new AutUser { DisplayName = request.Login, Token = token };
+            var autUser = new AutUser { DisplayName = request.Email, Token = token };
 
             return autUser;
         }
