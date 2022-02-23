@@ -4,6 +4,7 @@ using ElectronicDiary.WebApi.Models.Record.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ElectronicDiary.WebApi.Controllers
@@ -40,6 +41,15 @@ namespace ElectronicDiary.WebApi.Controllers
         {
             _logger.LogInformation("Start get record");
             return  await _recordGetter.GetOne(Id);
+        }
+
+        [Route("all")]
+        [HttpGet]
+        public async Task<List<RecordDtoGetOneUI>> GetAllRecord(string userId)
+        {
+            _logger.LogInformation("Start getall record");
+
+            return await _recordGetter.GetAll(userId);
         }
 
         [HttpPost]

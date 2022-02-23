@@ -1,6 +1,7 @@
 ﻿using ElectronicDiary.BLL.Models;
 using ElectronicDiary.WebApi.Models.Record.Dto.Request;
 using ElectronicDiary.WebApi.Models.Record.Dto.Response;
+using System.Collections.Generic;
 
 namespace ElectronicDiary.WebApi.Models.Record.Mapper
 {
@@ -13,6 +14,14 @@ namespace ElectronicDiary.WebApi.Models.Record.Mapper
                 Theme = create.Theme,
                 Text = create.Text,
                 UserId = create.UserId
+            };
+        }
+
+        public static RecordDtoRequest MapGetAll(string userId)
+        {
+            return new RecordDtoRequest
+            {
+                UserId = userId
             };
         }
 
@@ -51,6 +60,22 @@ namespace ElectronicDiary.WebApi.Models.Record.Mapper
                 Text = oneRecordDto.Text,
                 Theme=oneRecordDto.Theme
             };
+        }
+
+        public static List<RecordDtoGetOneUI> MapList(List<RecordDto> listRecordDto)
+        {
+            var result = new List<RecordDtoGetOneUI>();
+            foreach (var item in listRecordDto)
+            {
+                result.Add(new RecordDtoGetOneUI
+                {
+                    Id = item.Id,
+                    Text = item.Text,
+                    Theme = item.Theme
+                });
+            }
+
+            return result;
         }
 
         public static RecordDtoUI Map(RecordDto recordDto)

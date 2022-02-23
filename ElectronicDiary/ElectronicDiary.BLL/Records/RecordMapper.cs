@@ -1,5 +1,6 @@
 ﻿using ElectronicDiary.BLL.Models;
 using ElectronicDiary.DAL.Models;
+using System.Collections.Generic;
 
 namespace ElectronicDiary.BLL.Records
 {
@@ -20,6 +21,14 @@ namespace ElectronicDiary.BLL.Records
             return new Record
             {
                 Id = getOneRecord.Id,
+            };
+        }
+
+        public static Record MapGetByUserId(RecordDtoRequest getOneRecord)
+        {
+            return new Record
+            {
+                UserId = getOneRecord.UserId,
             };
         }
 
@@ -50,6 +59,21 @@ namespace ElectronicDiary.BLL.Records
                 Text = record.Text,
                 Theme = record.Theme,
             };
+        }
+
+        public static List<RecordDto> MapList(List<Record> records)
+        {
+            var result = new List<RecordDto>();
+            foreach (var item in records)
+            {
+                result.Add(new RecordDto
+                {
+                    Id = item.Id,
+                    Text = item.Text,
+                    Theme = item.Theme,
+                });
+            }
+            return result;
         }
     }
 }

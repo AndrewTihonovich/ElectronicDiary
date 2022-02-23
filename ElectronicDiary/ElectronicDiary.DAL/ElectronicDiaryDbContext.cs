@@ -16,7 +16,7 @@ namespace ElectronicDiary.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer("Server=localhost; DataBase=ElectricDiary;Integrated Security=True");
+            builder.UseSqlServer("Server=DESKTOP-E8CJAOH\\SQLEXPRESS; DataBase=ElectricDiary;Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

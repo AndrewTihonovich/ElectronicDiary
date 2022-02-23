@@ -3,6 +3,7 @@ using ElectronicDiary.WebApi.Models.Record.Dto.Response;
 using ElectronicDiary.WebApi.Models.Record.Interfaces;
 using ElectronicDiary.WebApi.Models.Record.Mapper;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ElectronicDiary.WebApi.Models.Record
@@ -26,6 +27,16 @@ namespace ElectronicDiary.WebApi.Models.Record
             var record = _recordGetter.GetById(getRecord);
 
             return RecordMapperUI.MapOne(await record);
+        }
+
+        public async Task<List<RecordDtoGetOneUI>> GetAll(string userId)
+        {
+
+            var getRecord = RecordMapperUI.MapGetAll(userId);
+
+            var records = _recordGetter.GetAllAsync(getRecord);
+
+            return RecordMapperUI.MapList( await records);
         }
     }
 }

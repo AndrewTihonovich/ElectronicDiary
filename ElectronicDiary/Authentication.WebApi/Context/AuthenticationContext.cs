@@ -11,7 +11,7 @@ namespace Authentication.WebApi.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=localhost; DataBase=UserAuthentication_Test;Integrated Security=True");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-E8CJAOH\\SQLEXPRESS; DataBase=IdentityDiary;Integrated Security=True");
 
         }
     }
