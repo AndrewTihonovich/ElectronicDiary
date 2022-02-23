@@ -28,6 +28,14 @@ namespace Authentication.WebApi
 
             services.TryAddSingleton<ISystemClock, SystemClock>();
 
+            services.AddCors(options => options.AddPolicy(name: "MyPolicyLocalhost",
+                                                            builder => builder
+                                                            .AllowAnyOrigin()
+                                                            .AllowAnyHeader()
+                                                            .AllowAnyMethod()
+                                                            )
+                    );
+
             var builder = services.AddIdentityCore<AppUser>();
 
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
@@ -56,6 +64,8 @@ namespace Authentication.WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("MyPolicyLocalhost");
 
             app.UseAuthentication();
 

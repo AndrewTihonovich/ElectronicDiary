@@ -47,6 +47,14 @@ namespace ElectronicDiary.WebApi
             services.AddScoped<IRecordDeleteUI, RecordDeleteUI>();
             services.AddScoped<IRecordUpdateUI, RecordUpdateUI>();
 
+            services.AddCors(options => options.AddPolicy(name: "MyPolicyLocalhost",
+                                                            builder => builder
+                                                            .AllowAnyOrigin()
+                                                            .AllowAnyHeader()
+                                                            .AllowAnyMethod()
+                                                            )
+                    );
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
@@ -76,6 +84,8 @@ namespace ElectronicDiary.WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("MyPolicyLocalhost");
 
             app.UseAuthentication();
             app.UseAuthorization();
