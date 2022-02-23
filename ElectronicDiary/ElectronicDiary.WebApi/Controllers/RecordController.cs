@@ -4,6 +4,7 @@ using ElectronicDiary.WebApi.Models.Record.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -56,16 +57,24 @@ namespace ElectronicDiary.WebApi.Controllers
         public async Task<RecordDtoUI> CreateRecord([FromBody] RecordCreateDtoUI recordCreate)
         {
             _logger.LogInformation("Start create record");
-            recordCreate.UserId = CurrentUserId;
-            return await _recordCreater.Create(recordCreate);
+            if (recordCreate.UserId == CurrentUserId && recordCreate.UserId != null)
+            {
+                return await _recordCreater.Create(recordCreate);
+            }
+
+            throw new Exception("Error current Id user");
         }
 
         [HttpPut]
         public async Task<RecordDtoUI> Put([FromBody] RecordUpdateDtoUI recordUpdate)
         {
             _logger.LogInformation("Start update record");
-            recordUpdate.UserId = CurrentUserId;
-            return await _recordUpdater.Update(recordUpdate);
+            if (recordUpdate.UserId == CurrentUserId)
+            {
+                await _recordUpdater.Update(recordUpdate);
+            }
+
+            throw new Exception("Error current Id user");
         }
 
         [HttpDelete]
