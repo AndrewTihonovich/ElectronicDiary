@@ -8,33 +8,24 @@ namespace Authentication.WebApi.Context
 {
     public class DataSeed
     {
-        public static async Task SeedDataAsync(AuthenticationContext context, UserManager<AppUser> userManager)
+        public static async Task SeedDataAsync(AuthenticationContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager) 
         {
-            var users2 = userManager.Users;
+
+            if (!roleManager.Roles.Any())
+            { 
+                var adminRole = await roleManager.CreateAsync(new IdentityRole("Admin"));
+                var userRole = await roleManager.CreateAsync(new IdentityRole("User"));
+            }
+
             if (!userManager.Users.Any())
             {
-                var users = new List<AppUser>
-                                {
-                                    new AppUser
-                                        {
-                                            Login = "Administrator",
-                                            UserName = "Admin",
-                                            Email = "admin@admin.com"
-                                        },
+                var admin = new AppUser() {Login = "Administrator", UserName = "Admin", Email = "admin@admin.com"};
+                await userManager.CreateAsync(admin, "!23QweAsdA");
+                await userManager.AddToRoleAsync(admin, "Admin");
 
-                                    new AppUser
-                                        {
-                                            Login = "User",
-                                            UserName = "User",
-                                            Email = "user@user.com"
-                                        }
-                                };
-
-                foreach (var user in users)
-                {
-                    await userManager.CreateAsync(user, "!23QweAsd");
-                }
-
+                var user = new AppUser() { Login = "User", UserName = "User", Email = "user@user.com" };
+                await userManager.CreateAsync(user, "!23QweAsdU");
+                await userManager.AddToRoleAsync(user, "User");
             }
         }
     }

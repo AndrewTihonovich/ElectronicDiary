@@ -33,6 +33,7 @@ namespace Authentication.WebApi.User.Repository
 
                 if (identityResult.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(appUser, "User");
                     return appUser;
                 }
 

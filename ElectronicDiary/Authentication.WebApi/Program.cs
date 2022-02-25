@@ -22,8 +22,9 @@ namespace Authentication.WebApi
                 {
                     var context = services.GetRequiredService<AuthenticationContext>();
                     var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     context.Database.Migrate();
-                    DataSeed.SeedDataAsync(context, userManager).Wait();
+                    DataSeed.SeedDataAsync(context, userManager, roleManager).Wait();
                 }
                 catch (Exception ex)
                 {

@@ -36,11 +36,8 @@ namespace Authentication.WebApi
                                                             )
                     );
 
-            var builder = services.AddIdentityCore<AppUser>();
-
-            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            identityBuilder.AddEntityFrameworkStores<AuthenticationContext>();
-            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+            var builder = services.AddIdentity<AppUser, IdentityRole>()   
+                .AddEntityFrameworkStores<AuthenticationContext>();
 
             services.AddScoped<IUserRepository, UserRepository>();
 

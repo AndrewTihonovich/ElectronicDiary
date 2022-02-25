@@ -1,9 +1,10 @@
 ﻿using Authentication.WebApi.User;
+using System.Threading.Tasks;
 
 namespace Authentication.WebApi.Jwt
 {
    public interface IJwtGenerator
     {
-        string CreateToken(AppUser user);
+        Task<string> CreateToken(AppUser user);
     }
 }
