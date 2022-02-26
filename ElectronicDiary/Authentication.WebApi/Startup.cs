@@ -3,13 +3,15 @@ using Authentication.WebApi.Jwt;
 using Authentication.WebApi.User;
 using Authentication.WebApi.User.Repository;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Authentication.WebApi
 {
@@ -26,8 +28,6 @@ namespace Authentication.WebApi
         {
             services.AddDbContext<AuthenticationContext>();
 
-            services.TryAddSingleton<ISystemClock, SystemClock>();
-
             services.AddCors(options => options.AddPolicy(name: "MyPolicyLocalhost",
                                                             builder => builder
                                                             .AllowAnyOrigin()
@@ -40,6 +40,19 @@ namespace Authentication.WebApi
                 .AddEntityFrameworkStores<AuthenticationContext>();
 
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("a900fae1-70ed-4698-9953-3a247c104366")),
+                    ValidateIssuerSigningKey = true,
+                };
+            });
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
 
