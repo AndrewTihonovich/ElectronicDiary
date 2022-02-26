@@ -3,10 +3,12 @@ using Authentication.WebApi.User.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Authentication.WebApi.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -20,7 +22,6 @@ namespace Authentication.WebApi.Controllers
             _repository = repository;
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet]
         public async Task<UserInfo> GetUserInfo(string userId)
         {
@@ -28,6 +29,15 @@ namespace Authentication.WebApi.Controllers
             var result = new UserInfo { UserLogin = user.Login };
 
             return result;
+        }
+
+        [Authorize(Roles ="Admin")]
+        [Route("all")]
+        [HttpGet]
+        public async Task<List<AppUser>> GetAllUsers()
+        {
+            var users = await _repository.GetAll();
+            return users;
         }
     }
 }

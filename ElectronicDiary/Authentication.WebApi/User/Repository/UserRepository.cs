@@ -1,6 +1,8 @@
 ﻿using Authentication.WebApi.Context;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -68,6 +70,12 @@ namespace Authentication.WebApi.User.Repository
                 return false;
             }
             return true;
+        }
+
+        public async Task<List<AppUser>> GetAll()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            return users;
         }
     }
 }
