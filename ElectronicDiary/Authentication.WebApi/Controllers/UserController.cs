@@ -39,5 +39,12 @@ namespace Authentication.WebApi.Controllers
             var users = await _repository.GetAll();
             return users;
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        public async Task<string> DelUserById(string id)
+        {
+            return await _repository.DeleteById(id);
+        }
     }
 }

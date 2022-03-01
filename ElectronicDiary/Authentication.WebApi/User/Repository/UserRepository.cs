@@ -77,5 +77,12 @@ namespace Authentication.WebApi.User.Repository
             var users = await _userManager.Users.ToListAsync();
             return users;
         }
+
+        public async Task<string> DeleteById(string id)
+        {
+            var user = await FindByEmail(id);
+            await _userManager.DeleteAsync(user);
+            return user.Email;
+        }
     }
 }

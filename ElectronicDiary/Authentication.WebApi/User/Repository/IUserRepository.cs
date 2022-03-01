@@ -9,5 +9,6 @@ namespace Authentication.WebApi.User.Repository
         Task<AppUser> FindByEmail(string email);
         Task<bool> CheckPassword(AppUser user, string password);
         Task<List<AppUser>> GetAll();
+        Task<string> DeleteById(string id);
     }
 }
