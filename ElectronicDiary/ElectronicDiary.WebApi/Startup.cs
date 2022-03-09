@@ -34,6 +34,11 @@ namespace ElectronicDiary.WebApi
             services.AddControllers();
             services.AddSwaggerGen();
 
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost:6379";
+            });
+
             services.AddSingleton<ILoggerProvider, DiaryDbContextLoggerProvider>();
 
             services.AddScoped<IElectronicDiaryDbContext, ElectronicDiaryDbContext>();
