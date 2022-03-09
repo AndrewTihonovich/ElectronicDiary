@@ -23,9 +23,9 @@ namespace Authentication.WebApi.User.Repository
             var appUser = new AppUser
             {
                 Email = user.Email,
-                Login = user.Login,
+                UserName = user.UserNameLogin,
                 PhoneNumber = user.Phone,
-                UserName = user.FirstName,
+                UserFirstName= user.FirstName,
                 UserLastName = user.LastName
             };
 

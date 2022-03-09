@@ -26,7 +26,7 @@ namespace Authentication.WebApi.Controllers
         public async Task<UserInfo> GetUserInfo(string userId)
         {
             var user = await _repository.FindByEmail(userId);
-            var result = new UserInfo { UserLogin = user.Login };
+            var result = new UserInfo { UserLogin = user.UserName };
 
             return result;
         }

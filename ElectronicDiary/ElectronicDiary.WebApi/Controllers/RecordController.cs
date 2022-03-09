@@ -71,7 +71,7 @@ namespace ElectronicDiary.WebApi.Controllers
             _logger.LogInformation("Start update record");
             if (recordUpdate.UserId == CurrentUserId)
             {
-                await _recordUpdater.Update(recordUpdate);
+                return await _recordUpdater.Update(recordUpdate);
             }
 
             throw new Exception("Error current Id user");

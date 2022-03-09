@@ -58,8 +58,9 @@ namespace ElectronicDiary.WebApi.Models.Record.Mapper
             {
                 Id = oneRecordDto.Id,
                 Text = oneRecordDto.Text,
-                Theme=oneRecordDto.Theme
-            };
+                Theme=oneRecordDto.Theme,
+                WasCreated= oneRecordDto.WasCreated
+    };
         }
 
         public static List<RecordDtoGetOneUI> MapList(List<RecordDto> listRecordDto)
@@ -71,7 +72,8 @@ namespace ElectronicDiary.WebApi.Models.Record.Mapper
                 {
                     Id = item.Id,
                     Text = item.Text,
-                    Theme = item.Theme
+                    Theme = item.Theme,
+                    WasCreated = item.WasCreated,
                 });
             }
 

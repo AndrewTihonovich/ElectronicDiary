@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Authentication.WebApi.Migrations
 {
     [DbContext(typeof(AuthenticationContext))]
-    [Migration("20220121183136_Init")]
+    [Migration("20220309073427_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,9 +46,6 @@ namespace Authentication.WebApi.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Login")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -71,6 +68,9 @@ namespace Authentication.WebApi.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("UserFirstName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserLastName")
                         .HasColumnType("nvarchar(max)");

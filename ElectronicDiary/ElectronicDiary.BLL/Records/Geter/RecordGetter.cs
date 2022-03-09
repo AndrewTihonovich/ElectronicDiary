@@ -30,7 +30,8 @@ namespace ElectronicDiary.BLL.Records.Getter
                     {
                         Text = item.Text,
                         Theme = item.Theme,
-                        Id = item.Id
+                        Id = item.Id,
+                        WasCreated = item.WasCreated,
                     });
                 }
             }

@@ -19,11 +19,11 @@ namespace Authentication.WebApi.Context
 
             if (!userManager.Users.Any())
             {
-                var admin = new AppUser() {Login = "Administrator", UserName = "Admin", Email = "admin@admin.com"};
+                var admin = new AppUser() { UserName = "Administrator", UserFirstName = "Admin", Email = "admin@admin.com"};
                 await userManager.CreateAsync(admin, "!23QweAsdA");
                 await userManager.AddToRoleAsync(admin, "Admin");
 
-                var user = new AppUser() { Login = "User", UserName = "User", Email = "user@user.com" };
+                var user = new AppUser() { UserName = "User", UserFirstName = "User", Email = "user@user.com" };
                 await userManager.CreateAsync(user, "!23QweAsdU");
                 await userManager.AddToRoleAsync(user, "User");
             }

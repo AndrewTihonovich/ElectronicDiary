@@ -58,6 +58,7 @@ namespace ElectronicDiary.BLL.Records
                 Id = record.Id,
                 Text = record.Text,
                 Theme = record.Theme,
+                WasCreated = record.WasCreated
             };
         }
 
@@ -71,6 +72,7 @@ namespace ElectronicDiary.BLL.Records
                     Id = item.Id,
                     Text = item.Text,
                     Theme = item.Theme,
+                    WasCreated = item.WasCreated,
                 });
             }
             return result;

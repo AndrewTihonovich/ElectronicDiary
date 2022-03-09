@@ -30,7 +30,7 @@ namespace Authentication.WebApi.Jwt
 
             var claims = new List<Claim>
             {
-                new Claim("Login", user.Login),
+                new Claim("Login", user.UserName),
                 new Claim("Email", user.Email),
                 new Claim(ClaimTypes.Role, role )
             };

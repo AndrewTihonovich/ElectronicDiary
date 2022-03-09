@@ -40,7 +40,7 @@ namespace Authentication.WebApi.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Login = table.Column<string>(nullable: true),
+                    UserFirstName = table.Column<string>(nullable: true),
                     UserLastName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

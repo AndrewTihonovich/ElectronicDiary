@@ -44,9 +44,6 @@ namespace Authentication.WebApi.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Login")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -69,6 +66,9 @@ namespace Authentication.WebApi.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("UserFirstName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserLastName")
                         .HasColumnType("nvarchar(max)");
