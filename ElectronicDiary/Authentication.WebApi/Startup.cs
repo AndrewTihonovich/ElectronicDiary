@@ -1,5 +1,6 @@
 using Authentication.WebApi.Context;
 using Authentication.WebApi.Jwt;
+using Authentication.WebApi.Middleware;
 using Authentication.WebApi.User;
 using Authentication.WebApi.User.Repository;
 using Microsoft.AspNetCore.Authentication;
@@ -73,6 +74,8 @@ namespace Authentication.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseSwagger();
             app.UseSwaggerUI();
