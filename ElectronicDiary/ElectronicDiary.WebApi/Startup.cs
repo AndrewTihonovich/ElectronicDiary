@@ -7,6 +7,10 @@ using ElectronicDiary.DAL;
 using ElectronicDiary.WebApi.Middleware;
 using ElectronicDiary.WebApi.Models.Record;
 using ElectronicDiary.WebApi.Models.Record.Interfaces;
+using ElectronicDiary.WebApi.Models.Record.Validation.Create;
+using ElectronicDiary.WebApi.Models.Record.Validation.Delete;
+using ElectronicDiary.WebApi.Models.Record.Validation.Get;
+using ElectronicDiary.WebApi.Models.Record.Validations.Update;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,6 +40,11 @@ namespace ElectronicDiary.WebApi
             {
                 options.Configuration = "localhost:6379";
             });
+
+            services.AddScoped<IGetRecordValidatorUI, GetRecordValidatorUI>();
+            services.AddScoped<ICreateRecordValidatorUI, CreateRecordValidatorUI>();
+            services.AddScoped<IUpdateRecordValidatorUI, UpdateRecordValidatorUI>();
+            services.AddScoped<IDeleteRecordValidatorUI, DeleteRecordValidatorUI>();
 
             services.AddScoped<IElectronicDiaryDbContext, ElectronicDiaryDbContext>();
             services.AddScoped<IRecordCreater, RecordCreater>();

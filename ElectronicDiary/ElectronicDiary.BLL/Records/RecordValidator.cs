@@ -18,7 +18,7 @@ namespace ElectronicDiary.BLL.Records
                 throw new ArgumentNullException();
             }
 
-            if (string.IsNullOrWhiteSpace(record.Theme))
+            if (string.IsNullOrWhiteSpace(record.UserId))
             {
                 throw new ArgumentNullException();
             }

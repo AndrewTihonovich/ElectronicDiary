@@ -47,6 +47,7 @@ namespace Authentication.WebApi.Controllers
                 try
                 {
                     await _cache.SetCashItemAsync<UserInfo>(userId, result);
+                    return result;
                 }
                 catch (Exception setEx)
                 {
