@@ -1,8 +1,9 @@
 ﻿using ElectronicDiary.BLL.Models;
 using ElectronicDiary.DAL;
-using ElectronicDiary.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ElectronicDiary.BLL.Records.Getter
@@ -18,25 +19,18 @@ namespace ElectronicDiary.BLL.Records.Getter
 
         public async Task<List<RecordDto>> GetAllAsync(RecordDtoRequest record)
         {
-            var recordDbModel = RecordMapper.MapGetByUserId(record);
-
-            var result = new List<Record>();
-            var  records = _db.Context.Records;
-            await foreach (var item in records)
-            {
-                if (item.UserId == record.UserId)
+            var result = await _db.Context.Records
+                .Where(x => x.UserId == record.UserId)
+                .Select(r => new RecordDto
                 {
-                    result.Add(new Record
-                    {
-                        Text = item.Text,
-                        Theme = item.Theme,
-                        Id = item.Id,
-                        WasCreated = item.WasCreated,
-                    });
-                }
-            }
-            return RecordMapper.MapList(result);
-        }
+                    Text = r.Text,
+                    Theme = r.Theme,
+                    Id = r.Id,
+                    WasCreated = r.WasCreated,
+                })
+                .ToListAsync();
+            return result;
+         }
 
         public async Task<RecordDto> GetById(RecordDtoRequest record)
         {

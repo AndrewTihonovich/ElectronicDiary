@@ -1,6 +1,5 @@
 ﻿using ElectronicDiary.BLL.Models;
 using ElectronicDiary.DAL.Models;
-using System.Collections.Generic;
 
 namespace ElectronicDiary.BLL.Records
 {
@@ -60,22 +59,6 @@ namespace ElectronicDiary.BLL.Records
                 Theme = record.Theme,
                 WasCreated = record.WasCreated
             };
-        }
-
-        public static List<RecordDto> MapList(List<Record> records)
-        {
-            var result = new List<RecordDto>();
-            foreach (var item in records)
-            {
-                result.Add(new RecordDto
-                {
-                    Id = item.Id,
-                    Text = item.Text,
-                    Theme = item.Theme,
-                    WasCreated = item.WasCreated,
-                });
-            }
-            return result;
         }
     }
 }
