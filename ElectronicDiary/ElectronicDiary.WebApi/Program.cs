@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
+using System.IO;
 
 namespace ElectronicDiary.WebApi
 {
@@ -10,10 +11,11 @@ namespace ElectronicDiary.WebApi
         public static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
+               .MinimumLevel.Information()
                .WriteTo.Console()
                .CreateLogger();
             
-            Log.Information("Starting host");
+            Log.Information("Starting host ElectronicDiary.WebApi");
 
             try
             {
@@ -21,7 +23,7 @@ namespace ElectronicDiary.WebApi
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "Host terminated unexpectedly");
+                Log.Fatal(ex, "Host ElectronicDiary terminated unexpectedly");
             }
             finally
             {
@@ -32,10 +34,12 @@ namespace ElectronicDiary.WebApi
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseSerilog((context, services, configuration)=>configuration
-                .ReadFrom.Configuration(context.Configuration)
-                .ReadFrom.Services(services)
-                .Enrich.FromLogContext()
-                .WriteTo.Console())
+                    .MinimumLevel.Information()
+                    .ReadFrom.Configuration(context.Configuration)
+                    .ReadFrom.Services(services)
+                    .Enrich.FromLogContext()
+                    .WriteTo.Console()
+                    .WriteTo.File(path: Path.Combine(Environment.CurrentDirectory + "//Logs", $"log-.txt"), rollingInterval: RollingInterval.Day))
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

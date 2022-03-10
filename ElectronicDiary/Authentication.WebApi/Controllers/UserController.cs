@@ -33,7 +33,7 @@ namespace Authentication.WebApi.Controllers
             if (cashUser is null)
             {
                 var user = await _repository.FindByEmail(userId);
-                var result = new UserInfo { UserLogin = user.Login };
+                var result = new UserInfo { UserLogin = user.UserName };
                 await _cache.SetCashItemAsync<UserInfo>(userId, result);
 
                 return result;

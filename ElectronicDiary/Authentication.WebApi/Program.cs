@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using System;
+using System.IO;
 
 namespace Authentication.WebApi
 {
@@ -13,6 +15,12 @@ namespace Authentication.WebApi
     {
         public static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+               .MinimumLevel.Information()
+               .WriteTo.Console()
+               .CreateLogger();
+
+            Log.Information("Starting host Authentication.WebApi");
             var host = CreateHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
@@ -32,11 +40,29 @@ namespace Authentication.WebApi
                 }
             }
 
-            host.Run();
+            try
+            {
+                host.Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Host Authentication terminated unexpectedly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            };
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog((context, services, configuration) => configuration
+                    .MinimumLevel.Information()
+                    .ReadFrom.Configuration(context.Configuration)
+                    .ReadFrom.Services(services)
+                    .Enrich.FromLogContext()
+                    .WriteTo.Console()
+                    .WriteTo.File(path: Path.Combine(Environment.CurrentDirectory + "//Logs", $"log-.txt"), rollingInterval: RollingInterval.Day))
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
