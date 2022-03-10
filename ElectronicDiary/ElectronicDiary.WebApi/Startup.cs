@@ -4,7 +4,6 @@ using ElectronicDiary.BLL.Records.Deleter;
 using ElectronicDiary.BLL.Records.Getter;
 using ElectronicDiary.BLL.Records.Updater;
 using ElectronicDiary.DAL;
-using ElectronicDiary.DAL.Logging;
 using ElectronicDiary.WebApi.Middleware;
 using ElectronicDiary.WebApi.Models.Record;
 using ElectronicDiary.WebApi.Models.Record.Interfaces;
@@ -14,7 +13,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -38,8 +36,6 @@ namespace ElectronicDiary.WebApi
             {
                 options.Configuration = "localhost:6379";
             });
-
-            services.AddSingleton<ILoggerProvider, DiaryDbContextLoggerProvider>();
 
             services.AddScoped<IElectronicDiaryDbContext, ElectronicDiaryDbContext>();
             services.AddScoped<IRecordCreater, RecordCreater>();

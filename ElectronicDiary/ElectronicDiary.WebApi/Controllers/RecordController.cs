@@ -40,7 +40,7 @@ namespace ElectronicDiary.WebApi.Controllers
         [HttpGet]
         public async Task<RecordDtoGetOneUI> GetOneRecord (int Id)
         {
-            _logger.LogInformation("Start get record");
+            _logger.LogInformation($"Start get record with id {Id}");
             return  await _recordGetter.GetOne(Id);
         }
 
@@ -48,7 +48,7 @@ namespace ElectronicDiary.WebApi.Controllers
         [HttpGet]
         public async Task<List<RecordDtoGetOneUI>> GetAllRecord(string userId)
         {
-            _logger.LogInformation("Start getall record");
+            _logger.LogInformation($"Start getall records for user {userId}");
 
             return await _recordGetter.GetAll(userId);
         }
@@ -56,7 +56,7 @@ namespace ElectronicDiary.WebApi.Controllers
         [HttpPost]
         public async Task<RecordDtoUI> CreateRecord([FromBody] RecordCreateDtoUI recordCreate)
         {
-            _logger.LogInformation("Start create record");
+            _logger.LogInformation($"Start create record for user {recordCreate.UserId}");
             if (recordCreate.UserId == CurrentUserId && recordCreate.UserId != null)
             {
                 return await _recordCreater.Create(recordCreate);
@@ -68,7 +68,7 @@ namespace ElectronicDiary.WebApi.Controllers
         [HttpPut]
         public async Task<RecordDtoUI> Put([FromBody] RecordUpdateDtoUI recordUpdate)
         {
-            _logger.LogInformation("Start update record");
+            _logger.LogInformation($"Start update record for user {recordUpdate.UserId}");
             if (recordUpdate.UserId == CurrentUserId)
             {
                 return await _recordUpdater.Update(recordUpdate);
@@ -80,7 +80,7 @@ namespace ElectronicDiary.WebApi.Controllers
         [HttpDelete]
         public async Task<RecordDtoUI> Delete(int Id)
         {
-            _logger.LogInformation("Start delete record");
+            _logger.LogInformation($"Start delete record with id {Id}");
             return await _recordDeleter.Delete(Id);
         }
     }
