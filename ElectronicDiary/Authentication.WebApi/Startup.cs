@@ -3,12 +3,11 @@ using Authentication.WebApi.Jwt;
 using Authentication.WebApi.Middleware;
 using Authentication.WebApi.User;
 using Authentication.WebApi.User.Repository;
-using Microsoft.AspNetCore.Authentication;
+using Authentication.WebApi.Validations.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,6 +41,8 @@ namespace Authentication.WebApi
                 .AddEntityFrameworkStores<AuthenticationContext>();
 
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IAuthValidator, AuthValidator>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {

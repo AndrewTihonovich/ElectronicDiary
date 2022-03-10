@@ -1,6 +1,7 @@
 ﻿using Authentication.WebApi.Jwt;
 using Authentication.WebApi.User;
 using Authentication.WebApi.User.Repository;
+using Authentication.WebApi.Validations.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,12 +16,14 @@ namespace Authentication.WebApi.Controllers
 
         private readonly IUserRepository _repository;
         private readonly IJwtGenerator _jwt;
+        private readonly IAuthValidator _authValidator;
 
-        public AuthenController(ILogger<AuthenController> logger, IUserRepository repository, IJwtGenerator jwt)
+        public AuthenController(ILogger<AuthenController> logger, IUserRepository repository, IJwtGenerator jwt, IAuthValidator authValidator)
         {
             _logger = logger;
             _repository = repository;
             _jwt = jwt;
+            _authValidator = authValidator;
         }
 
         [AllowAnonymous]
@@ -29,6 +32,8 @@ namespace Authentication.WebApi.Controllers
         public async Task<AutUser> LoginAsync([FromBody] UserLogin request) 
         {
             string token = null;
+
+            await _authValidator.LoginValidator(request);
 
             var user = await _repository.FindByEmail(request.Email);
 
@@ -52,6 +57,7 @@ namespace Authentication.WebApi.Controllers
         [HttpPost]
         public async Task<AutUser> RegistrationAsync([FromBody] UserRegistration request)
         {
+            await _authValidator.RegistrationValidator(request);
             var registrationUser = await _repository.Create(request);
 
             var token = await _jwt.CreateToken(registrationUser);

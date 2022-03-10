@@ -2,9 +2,7 @@
 using ElectronicDiary.WebApi.Models.Record.Dto.Response;
 using ElectronicDiary.WebApi.Models.Record.Interfaces;
 using ElectronicDiary.WebApi.Models.Record.Mapper;
-using ElectronicDiary.WebApi.Models.Record.Validation.Create;
 using ElectronicDiary.WebApi.Models.Record.Validation.Get;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +12,6 @@ namespace ElectronicDiary.WebApi.Models.Record
     {
         private IRecordGetter _recordGetter;
         private IGetRecordValidatorUI _getValidator;
-
 
         public RecordGetUI(IRecordGetter recordGetUI, IGetRecordValidatorUI getValidator)
         {

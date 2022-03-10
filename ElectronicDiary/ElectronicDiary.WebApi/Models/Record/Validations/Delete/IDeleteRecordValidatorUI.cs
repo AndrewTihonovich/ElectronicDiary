@@ -1,5 +1,4 @@
-﻿using ElectronicDiary.BLL.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace ElectronicDiary.WebApi.Models.Record.Validation.Delete
 {
