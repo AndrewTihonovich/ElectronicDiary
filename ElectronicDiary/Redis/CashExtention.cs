@@ -17,19 +17,34 @@ namespace Redis
             option.AbsoluteExpirationRelativeToNow = absoluteExpireTime ?? TimeSpan.FromMinutes(5);
             option.SlidingExpiration = unusedExpireTime;
 
-            var jsonData = JsonSerializer.Serialize(data);
-            await cache.SetStringAsync(key, jsonData, option);
+            try
+            {
+                var jsonData = JsonSerializer.Serialize(data);
+                await cache.SetStringAsync(key, jsonData, option);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error with Set Redis: {ex.Message}");
+            }
+            
         }
 
         public static async Task<T> GetCashItemAsync<T>(this IDistributedCache cache, string key)
         {
-            var jsonData = await cache.GetStringAsync(key);
-
-            if (jsonData is null)
+            try
             {
-                return default(T);
+                var jsonData = await cache.GetStringAsync(key);
+                if (jsonData is null)
+                {
+                   return default(T);
+                }
+                return JsonSerializer.Deserialize<T>(jsonData);
             }
-            return JsonSerializer.Deserialize<T>(jsonData);
+            catch (Exception ex)
+            {
+                throw new Exception($"Error with Get Redis: {ex.Message}");
+            }
+            
         }
     }
 }
