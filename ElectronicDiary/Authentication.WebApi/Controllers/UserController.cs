@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using Redis;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -29,17 +30,32 @@ namespace Authentication.WebApi.Controllers
         [HttpGet]
         public async Task<UserInfo> GetUserInfo(string userId)
         {
-            var cashUser = await _cache.GetCashItemAsync<UserInfo>(userId);
+            UserInfo cashUser = default;
+            try
+            {
+                cashUser = await _cache.GetCashItemAsync<UserInfo>(userId);
+            }
+            catch (Exception getEx)
+            {
+                _logger.LogError(getEx.Message);
+            }
+
             if (cashUser is null)
             {
                 var user = await _repository.FindByEmail(userId);
                 var result = new UserInfo { UserLogin = user.UserName };
-                await _cache.SetCashItemAsync<UserInfo>(userId, result);
-
-                return result;
+                try
+                {
+                    await _cache.SetCashItemAsync<UserInfo>(userId, result);
+                }
+                catch (Exception setEx)
+                {
+                    _logger.LogError(setEx.Message);
+                    return result;
+                }
             }
             return cashUser;
-            
+
         }
 
         [Authorize(Roles ="Admin")]
