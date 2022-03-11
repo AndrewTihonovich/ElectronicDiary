@@ -1,4 +1,5 @@
 ﻿using Authentication.WebApi.Jwt;
+using Authentication.WebApi.Sender;
 using Authentication.WebApi.User;
 using Authentication.WebApi.User.Repository;
 using Authentication.WebApi.Validations.Authentication;
@@ -63,6 +64,11 @@ namespace Authentication.WebApi.Controllers
             var token = await _jwt.CreateToken(registrationUser);
             var autUser = new AutUser { DisplayName = request.Email, Token = token };
 
+            var email = new EmailSender();
+            await email.SendEmailAsync(
+                request.Email, 
+                "Уведомление о регистрации", 
+                $"Здравствуйте {request.FirstName}! Вы были зарегистрированы в ElectronicDiary");
             return autUser;
         }
     }
