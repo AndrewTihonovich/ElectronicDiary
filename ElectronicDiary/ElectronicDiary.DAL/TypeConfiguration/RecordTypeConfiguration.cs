@@ -12,7 +12,7 @@ namespace ElectronicDiary.DAL.TypeConfiguration
         {
             builder.ToTable(_tableName).HasKey(p => p.Id);
             builder.Property(p => p.Text).HasMaxLength(1000).IsRequired();
-            builder.Property(p=>p.Theme).HasMaxLength(64).IsRequired();
+            builder.Property(p=>p.Theme).HasMaxLength(64);
         }
     }
 }

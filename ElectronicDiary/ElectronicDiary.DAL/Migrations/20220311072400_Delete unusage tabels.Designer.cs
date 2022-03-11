@@ -4,14 +4,16 @@ using ElectronicDiary.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ElectronicDiary.DAL.Migrations
 {
     [DbContext(typeof(ElectronicDiaryDbContext))]
-    partial class ElectronicDiaryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220311072400_Delete unusage tabels")]
+    partial class Deleteunusagetabels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

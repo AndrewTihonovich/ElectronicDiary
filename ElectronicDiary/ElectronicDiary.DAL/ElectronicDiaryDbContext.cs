@@ -11,7 +11,6 @@ namespace ElectronicDiary.DAL
     {
         public ElectronicDiaryDbContext Context { get => this; }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Record> Records { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -21,9 +20,7 @@ namespace ElectronicDiary.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserTypeConfiguration());
             modelBuilder.ApplyConfiguration(new RecordTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new UserRoleTypeConfiguration());
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
